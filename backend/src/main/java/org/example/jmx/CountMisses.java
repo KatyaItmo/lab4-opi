@@ -1,5 +1,6 @@
 package org.example.jmx;
 
+import javax.management.MBeanNotificationInfo;
 import javax.management.Notification;
 import javax.management.NotificationBroadcasterSupport;
 import javax.management.openmbean.*;
@@ -99,5 +100,15 @@ public class CountMisses extends NotificationBroadcasterSupport implements Count
 
     public int getTotalMisses() {
         return totalMisses;
+    }
+
+    @Override
+    public MBeanNotificationInfo[] getNotificationInfo() {
+        String[] types = {"point.miss.streak"};
+        String name = Notification.class.getName();
+        String description = "Notification sent when a user reaches a miss streak threshold";
+
+        MBeanNotificationInfo info = new MBeanNotificationInfo(types, name, description);
+        return new MBeanNotificationInfo[] { info };
     }
 }
