@@ -1,0 +1,15 @@
+import javax.xml.parsers.DocumentBuilderFactory
+
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+tasks.register('cleanAll', Delete) {
+    dependsOn(':frontend:cleanFront')
+    dependsOn(':backend:cleanBack')
+    delete 'build'
+}

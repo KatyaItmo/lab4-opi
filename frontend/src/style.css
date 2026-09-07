@@ -1,0 +1,228 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+header, footer {
+    background-color: #2c3e50;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    min-height: 80vh;
+}
+
+.auth-form, form {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+}
+
+.form-row {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"], input[type="password"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+button {
+    cursor: pointer;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: background 0.3s;
+    margin: 5px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+.link-btn {
+    background: none;
+    color: #3498db;
+    text-decoration: underline;
+    font-size: 0.9rem;
+}
+
+table {
+    width: 100%;
+    max-width: 800px;
+    border-collapse: collapse;
+    background: white;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+
+th {
+    background-color: #ecf0f1;
+}
+
+svg {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+@media screen and (min-width: 1138px) {
+    main {
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: flex-start;
+    }
+    
+    .auth-form {
+        max-width: 500px;
+    }
+}
+
+@media screen and (min-width: 675px) and (max-width: 1137px) {
+    main {
+        flex-direction: column;
+    }
+    
+    table {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 674px) {
+    header, footer {
+        font-size: 0.8rem;
+    }
+
+    form {
+        padding: 1rem;
+        width: 95%;
+    }
+
+    table th:nth-child(5), table td:nth-child(5),
+    table th:nth-child(6), table td:nth-child(6) {
+        display: none;
+    }
+
+    button {
+        width: 100%;
+        margin: 5px 0;
+    }
+}
+
+.main-wrapper {
+    display: grid;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    grid-template-areas: 
+        "graph"
+        "form"
+        "table";
+}
+
+@media screen and (min-width: 1138px) {
+    .main-wrapper {
+        grid-template-areas: 
+            "form graph"
+            "table table";
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+    }
+}
+
+@media screen and (min-width: 675px) and (max-width: 1137px) {
+    .main-wrapper {
+        grid-template-areas: 
+            "graph"
+            "form"
+            "table";
+        justify-items: center;
+    }
+    .form-section, .graph-section { width: 80%; }
+}
+
+.form-section { grid-area: form; }
+.graph-section { grid-area: graph; display: flex; justify-content: center; }
+.table-section { grid-area: table; width: 100%; overflow-x: auto; }
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.input-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+
+.input-row input {
+    flex-grow: 1;
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-group button {
+    flex: 1;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #eee;
+    text-align: center;
+}
+
+@media screen and (max-width: 674px) {
+    table th:nth-child(5), table td:nth-child(5),
+    table th:nth-child(6), table td:nth-child(6) {
+        display: none;
+    }
+}

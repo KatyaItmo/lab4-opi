@@ -1,0 +1,20 @@
+plugins {
+    id 'com.github.node-gradle.node' version '7.1.0'
+}
+
+node {
+    download = true
+    version = '20.11.0'
+}
+
+tasks.register('buildFront', NpmTask) {
+    dependsOn npmInstall
+    args = ['run', 'build']
+    inputs.dir file('src')
+    inputs.file file('package.json')
+    outputs.dir file('build')
+}
+
+tasks.register('cleanFront', Delete) {
+    delete 'build'
+}
