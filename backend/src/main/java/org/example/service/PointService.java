@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
@@ -14,12 +15,16 @@ import javax.persistence.PersistenceContext;
 
 import org.example.dto.PointDTO;
 import org.example.dto.PointResponseDTO;
+import org.example.jmx.JmxInizializer;
 import org.example.model.AreaChecker;
 import org.example.model.Point;
 import org.example.model.User;
 
 @Stateless
 public class PointService {
+
+	@EJB
+	private JmxInizializer jmxInizializer;
 
 	@PersistenceContext(unitName = "Lab4Unit")
     private EntityManager em;
@@ -36,7 +41,7 @@ public class PointService {
 			 boolean hit = AreaChecker.checkHit(dto.getX(), dto.getY(), dto.getR(), dto.getClick());
 			 long endTime = System.nanoTime();
 
-			 notifyJmx(login, hit);
+			 jmxInizializer.getMissBean().registerPoint(login, hit);
 
 			 Point point = new Point(dto.getX(), dto.getY(), dto.getR(), hit, user);
 			 point.setCheckTime(LocalDateTime.now());
@@ -84,28 +89,5 @@ public class PointService {
 		        p.getX(), p.getY(), p.getR(), p.getHit(),
 		        p.getCheckTime().toString(), p.getExecutionTime()
 		    )).collect(Collectors.toList());
-	}
-
-	private void notifyJmx(String login, boolean hit) {
-		try {
-			MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
-
-			mbs.invoke(
-					new ObjectName("org.example.jmx:type=CountMisses"),
-					"registerPoint",
-					new Object[]{ login, hit },
-					new String[]{ String.class.getName(), boolean.class.getName() }
-			);
-
-			mbs.invoke(
-					new ObjectName("org.example.jmx:type=Statistic"),
-					"calculateStatistic",
-					new Object[]{ login, hit },
-					new String[]{ String.class.getName(), boolean.class.getName() }
-			);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 }
