@@ -25,10 +25,6 @@ public class UserStats {
         return missedPoints;
     }
 
-    public long getConsecutiveMisses() {
-        return consecutiveMisses;
-    }
-
     public synchronized void registerHit() {
         this.totalPoints++;
         this.consecutiveMisses = 0;

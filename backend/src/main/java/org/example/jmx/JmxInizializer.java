@@ -12,9 +12,14 @@ import java.lang.management.ManagementFactory;
 public class JmxInizializer {
     private MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
     private TotalMissStats missBean;
+    private PercentMiss percentBean;
 
     public TotalMissStats getMissBean() {
         return missBean;
+    }
+
+    public PercentMiss getPercentBean() {
+        return percentBean;
     }
 
     @PostConstruct
@@ -22,6 +27,9 @@ public class JmxInizializer {
         try {
             missBean = new TotalMissStats();
             mbs.registerMBean(missBean, new ObjectName("org.example.jmx:type=TotalMissStats"));
+
+            percentBean = new PercentMiss();
+            mbs.registerMBean(percentBean, new ObjectName("org.example.jmx:type=PercentMiss"));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -32,6 +40,7 @@ public class JmxInizializer {
     public void unregisterMBeans() {
         try {
             mbs.unregisterMBean(new ObjectName("org.example.jmx:type=TotalMissStats"));
+            mbs.unregisterMBean(new ObjectName("org.example.jmx:type=PercentMiss"));
 
         } catch (Exception e) {
             e.printStackTrace();
