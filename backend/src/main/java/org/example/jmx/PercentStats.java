@@ -4,9 +4,9 @@ public class PercentStats {
     private final String username;
     private long totalPoint;
     private long missPoint;
-    private long percent;
+    private int percent;
 
-    public PercentStats(String username, long totalPoint, long missPoint, long percent) {
+    public PercentStats(String username, long totalPoint, long missPoint, int percent) {
         this.username = username;
         this.totalPoint = totalPoint;
         this.missPoint = missPoint;
@@ -17,7 +17,7 @@ public class PercentStats {
         return username;
     }
 
-    public long getPercent() {
+    public int getPercent() {
         return percent;
     }
 
@@ -31,6 +31,6 @@ public class PercentStats {
     }
 
     public void calculatePercent() {
-        this.percent = (long) Math.round((double) this.missPoint / this.totalPoint * 100);
+        this.percent = (int) Math.round((double) this.missPoint / this.totalPoint * 100);
     }
 }

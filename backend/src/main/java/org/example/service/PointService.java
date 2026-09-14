@@ -42,9 +42,7 @@ public class PointService {
 			 long endTime = System.nanoTime();
 
 			 jmxInizializer.getMissBean().registerPoint(login, hit);
-			 if (dto.getClick()) {
-				 jmxInizializer.getPercentBean().registerPoint(login, hit);
-			 }
+			 jmxInizializer.getPercentBean().registerPoint(login, hit);
 
 			 Point point = new Point(dto.getX(), dto.getY(), dto.getR(), hit, user);
 			 point.setCheckTime(LocalDateTime.now());

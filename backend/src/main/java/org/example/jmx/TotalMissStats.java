@@ -10,7 +10,13 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class TotalMissStats extends NotificationBroadcasterSupport implements TotalMissStatsMXBean{
     private final Map<String, UserStats> statsMap = new ConcurrentHashMap<>();
+    private int streakMiss = 0;
     private final AtomicLong sequenceNumber = new AtomicLong(1);
+
+    @Override
+    public int getStreakMiss() {
+        return streakMiss;
+    }
 
     @Override
     public List<UserStats> getStats() {
@@ -26,8 +32,10 @@ public class TotalMissStats extends NotificationBroadcasterSupport implements To
 
         if (isHit) {
             stats.registerHit();
+            streakMiss = 0;
         } else {
             long consecutiveMisses = stats.registerMiss();
+            streakMiss++;
 
             if (consecutiveMisses >= 3) {
                 sendMissNotification(username, consecutiveMisses);
