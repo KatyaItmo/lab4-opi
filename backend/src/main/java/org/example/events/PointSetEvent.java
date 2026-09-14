@@ -2,20 +2,19 @@ package org.example.events;
 
 import jdk.jfr.*;
 
+@Category({"eventLog", "points"})
+@Name("org.example.events.PointSetEvent")
 @Label("Point")
-@Category({"event_log", "points"})
-@Description("Event: user clicked point")
-@StackTrace(false)
 @Threshold("0 ms")
 public class PointSetEvent extends Event {
 
-    @Label("User Name")
+    @Label("User Login")
     public String username;
 
-    @Label("Coordinate X")
+    @Label("X coordinate")
     public double x;
 
-    @Label("Coordinate Y")
+    @Label("Y coordinate")
     public double y;
 
     @Label("Radius")

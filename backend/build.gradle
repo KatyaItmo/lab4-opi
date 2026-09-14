@@ -24,7 +24,7 @@ dependencies {
 tasks.register('cleanBack', Delete) {
     delete 'build'
     delete 'final'
-    delete 'src/main/webapp'
+    delete 'src/main/webapp/static'
 }
 
 test {

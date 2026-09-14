@@ -15,6 +15,8 @@ import javax.persistence.PersistenceContext;
 
 import org.example.dto.PointDTO;
 import org.example.dto.PointResponseDTO;
+import org.example.events.MissEvent;
+import org.example.events.PointSetEvent;
 import org.example.jmx.JmxInizializer;
 import org.example.model.AreaChecker;
 import org.example.model.Point;
@@ -37,12 +39,11 @@ public class PointService {
 		 List<Point> points = new ArrayList<>();
 
 		 for (PointDTO dto: dtos) {
+			 PointSetEvent eventPoint = new PointSetEvent();
+
 			 long startTime = System.nanoTime();
 			 boolean hit = AreaChecker.checkHit(dto.getX(), dto.getY(), dto.getR(), dto.getClick());
 			 long endTime = System.nanoTime();
-
-			 jmxInizializer.getMissBean().registerPoint(login, hit);
-			 jmxInizializer.getPercentBean().registerPoint(login, hit);
 
 			 Point point = new Point(dto.getX(), dto.getY(), dto.getR(), hit, user);
 			 point.setCheckTime(LocalDateTime.now());
@@ -50,6 +51,26 @@ public class PointService {
 
 			 em.persist(point);
 			 points.add(point);
+
+			 eventPoint.username = login;
+			 eventPoint.x = Double.parseDouble(point.getX());
+			 eventPoint.y = Double.parseDouble(point.getY());
+			 eventPoint.r = Double.parseDouble(point.getR());
+			 eventPoint.isHit = hit;
+
+			 if (!hit) {
+				 MissEvent eventMiss = new MissEvent();
+				 eventMiss.username = login;
+				 eventMiss.x = Double.parseDouble(point.getX());
+				 eventMiss.y = Double.parseDouble(point.getY());
+				 eventMiss.r = Double.parseDouble(point.getR());
+				 eventMiss.commit();
+			 }
+
+			 eventPoint.commit();
+
+			 jmxInizializer.getMissBean().registerPoint(login, hit);
+			 jmxInizializer.getPercentBean().registerPoint(login, hit);
 		 }
 
 		 return makeResult(points);

@@ -2,22 +2,22 @@ package org.example.events;
 
 import jdk.jfr.*;
 
-@Label("Miss")
-@Category({"event_log", "missed_points"})
-@Description("Event: user clicked and missed")
-@StackTrace(false)
+@Category({"eventLog", "misses"})
+@Name("org.example.events.MissEvent")
+@Label("Miss Point")
 @Threshold("0 ms")
 public class MissEvent extends Event {
 
-    @Label("User Name")
+    @Label("User Login")
     public String username;
 
-    @Label("Coordinate X")
+    @Label("X coordinate")
     public double x;
 
-    @Label("Coordinate Y")
+    @Label("Y coordinate")
     public double y;
 
     @Label("Radius")
     public double r;
+
 }

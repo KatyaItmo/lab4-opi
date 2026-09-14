@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure>
+    <deployment>
+        <dependencies>
+            <!-- Добавляем доступ к модулю JDK Flight Recorder -->
+            <module name="jdk.jfr" export="true"/>
+        </dependencies>
+    </deployment>
+</jboss-deployment-structure>
